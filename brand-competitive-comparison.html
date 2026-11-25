@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>品牌競爭比較｜Pailotism</title><link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/brand-competitive-comparison.css"></head>
+<body><main class="workspace">
+<header class="page-header"><div><a href="market-exploration-result.html" class="back-link">← 返回競品分析</a><p class="eyebrow">第二階段 · 商業結構與差異化</p><h1>品牌競爭比較</h1><p class="muted">比較已選品牌的經營結構，找出相對差異與待驗證的方向。</p></div><span class="mock-label">Mock Data／模擬分析／模擬 AI</span></header>
+<div id="input-notice" class="notice" hidden></div>
+<section id="setup" class="panel">
+<div class="section-title"><div><p class="eyebrow">分析前確認</p><h2>確認比較對象與分析主題</h2></div><span id="setup-count" class="muted" role="status"></span></div>
+<p class="muted">建議 3～5 家，最多 10 家競品。可在本頁調整，或返回第一階段新增。</p>
+<div class="setup-tools"><label>查找帶入的品牌 <input id="setup-search" type="search" placeholder="輸入品牌名稱"></label><button id="first-three">使用前三家示例</button><button id="stress-ten">10 家壓力示例</button><button id="clear-brands">清除品牌</button></div>
+<div id="brand-options" class="brand-options"></div>
+<h3>選擇分析主題</h3><div id="topic-options" class="topic-options"></div><p class="source-note">市場評分僅作輔助；品牌競爭定位與發展方向會依已選主題自動彙整，無須另行勾選。</p>
+<div class="own-data"><div><h3>自身品牌資料確認</h3><p class="muted">沿用品牌定位與第一階段資料。補充欄位可略過，僅用於本次分析。</p><dl><dt>品牌</dt><dd>SHCJ 生活采家</dd><dt>定位 · 已取得</dt><dd>為家庭提供可信賴的居家選物</dd><dt>商品 · 已取得</dt><dd>居家用品、生活用品</dd><dt>價格 · 待確認</dt><dd>NT$300–1,500（第一階段模擬）</dd><dt>口碑 · 未取得</dt><dd>保留缺值</dd></dl></div><div class="supplement">
+<label>品牌類型 <select id="brand-kind"><option value="product">商品型</option><option value="service">服務型示例</option><option value="mixed">混合型示例</option></select></label>
+<p class="source-note">服務型與混合型以相同品牌 ID 模擬新增整理服務，供檢視 UI，並非品牌實際業務。</p>
+<label>定位補充（選填）<textarea id="own-position" rows="2" placeholder="例如：強調小宅收納的實用選物"></textarea></label>
+<label>客群補充（選填）<input id="own-audience" placeholder="例如：小宅家庭"></label>
+<label>配送或服務補充（選填）<input id="own-service" placeholder="未提供時沿用既有資料或標示未取得"></label>
+</div></div>
+<div class="setup-actions"><span id="setup-error" role="alert"></span><button id="restore-result">載入已保存結果</button><button id="start-analysis" class="primary">略過補充並開始模擬分析</button></div>
+</section>
+<div id="loading" class="panel" hidden role="status"><div class="loading-mark"></div><h2>正在整理比較工作台</h2><p class="muted">使用本地 Mock Data 模擬處理，不呼叫正式 API。</p></div>
+<div id="error-state" class="panel" hidden><h2>模擬分析未完成</h2><p id="error-message"></p><button id="retry-analysis">重新模擬分析</button></div>
+<div id="results" hidden>
+<div class="workbar"><div id="brand-strip" class="brand-strip"></div><div class="workbar-actions"><button id="adjust">調整比較</button><button id="save-result">保存結果</button></div><nav class="anchors"><a href="#overview">競爭總覽</a><a href="#matrix">定位矩陣</a><a href="#business">商業特性</a><a href="#structure">商品與價格</a><a href="#overlap">重疊熱力圖</a><a href="#insights">綜合分析</a><a href="#sources">資料來源</a></nav></div>
+<section id="overview" class="panel"><div class="section-title"><h2>品牌競爭總覽</h2><span id="analysis-time" class="source-note"></span></div><div id="overview-content"></div></section>
+<section id="matrix" class="panel"><div class="section-title"><div><h2>品牌市場定位矩陣</h2><p class="muted">切換軸查看同一批品牌的定位差異。數值表示特徵程度。</p></div><div class="axis-controls"><label>橫軸 <select id="matrix-x"></select></label><label>縱軸 <select id="matrix-y"></select></label></div></div><div id="matrix-scenarios" class="scenario-options" aria-label="AI 推薦比較情境"></div><div id="matrix-purpose" class="scenario-purpose"></div><details class="axis-method"><summary>座標軸定義與評估口徑</summary><div id="matrix-definitions"></div></details><div id="matrix-stage" class="matrix-stage"></div><p id="matrix-summary" class="analysis-summary"></p><p id="matrix-missing" class="source-note"></p></section>
+<section id="business" class="panel"><h2>多品牌商業特性比較</h2><div id="business-tabs" class="topic-tabs" role="tablist" aria-label="商業比較主題"></div><div id="business-table" role="tabpanel"></div><div id="business-summary" class="analysis-summary"></div></section>
+<section id="structure" class="panel"><div class="section-title"><div><h2 id="structure-title">商品與價格結構</h2><p class="muted">統一樣本口徑，比較公開價格範圍及品項結構。</p></div><label id="structure-kind-wrap" hidden>資料範圍 <select id="structure-kind"><option value="product">商品</option><option value="service">服務</option></select></label></div><p id="structure-context" class="source-note"></p><p class="source-note">品類數沿用第一階段；只有數量、缺少細項的品牌顯示待確認，不以群聚名稱取代品類。服務示例使用獨立範圍。</p><div class="structure-grid"><div><h3>公開價格區間</h3><div id="price-chart"></div></div><div><h3 id="mix-title">公開品項結構</h3><div id="mix-chart"></div></div></div><h3>同口徑價格帶分布</h3><p id="price-band-note" class="source-note"></p><div id="price-distribution"></div><p class="source-note">公開售價不等於成交價；品項數及價格帶樣本占比不代表銷量或營收占比。樣本只涵蓋選定可比範圍，不能代表完整品牌價格結構。</p></section>
+<section id="overlap" class="panel"><h2>品牌競爭重疊熱力圖</h2><p class="muted">以自家為基準，點選格子查看共同特性、差異與依據。分數為模擬重疊程度。</p><div id="heatmap" class="table-scroll"></div><div class="heat-legend"><span>低重疊</span><i></i><span>高重疊</span><span class="missing-key">灰色＝未取得</span></div><p id="heat-summary" class="analysis-summary"></p></section>
+<section id="insights" class="panel"><h2>品牌競爭定位與發展方向</h2><p class="muted">依已選主題與有效比較結果自動彙整；模擬 AI 結果，不將資訊缺漏當作競爭不足。</p><div class="analysis-summary judgment-note">本示例為規則與文字模板模擬，不是正式 AI 結論。正式分析須結合品牌證據、客群需求與多品牌比較；獨有標籤、價格高低、通路數量或單一指標不直接等於優劣勢。證據不足時列為待驗證假設。</div><div id="insight-content" class="insight-grid"></div></section>
+<section id="sources" class="panel"><div class="section-title"><h2>資料來源與分析限制</h2><label>驗證狀態 <select id="demo-state"><option value="normal">正常資料</option><option value="partial">部分缺值</option><option value="empty">空資料</option><option value="error">模擬失敗</option></select></label></div><div id="sources-content"></div></section>
+<footer class="panel result-footer"><div><button id="back-level1">返回第一階段</button><button id="adjust-bottom">調整比較品牌</button></div><div><label>第三階段對象 <select id="third-brand"><option value="">全部已選競品</option></select></label><button id="third-stage" class="primary">進入競爭情報深度分析</button></div></footer>
+<p id="result-status" class="status" role="status"></p>
+</div>
+</main>
+<dialog id="detail-dialog"><h2 id="detail-title"></h2><div id="detail-body"></div><form method="dialog"><button class="primary">關閉</button></form></dialog>
+<script src="js/market-brand-data.js"></script><script src="js/level2-analysis-model.js"></script><script src="js/brand-competitive-comparison.js"></script>
+</body></html>

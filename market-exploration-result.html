@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>競品分析</title><link rel="stylesheet" href="css/style.css">
+<style>
+body{background:var(--bg)}.app{grid-template-columns:238px minmax(0,1fr)}.sidebar{padding:24px 16px}.brand-word{font-weight:900;font-size:21px;letter-spacing:1px}.nav-label{padding:12px;color:var(--muted);font-size:13px}.nav-current{padding:12px;border-radius:10px;background:#eef2ff;color:var(--primary);font-weight:700}.side-bottom{margin-top:auto;font-size:13px;color:var(--muted);line-height:1.8;padding:14px}main{max-width:1510px;width:100%;margin:auto;padding:30px clamp(16px,3vw,42px) 100px}h1{font-size:28px;margin:8px 0}h2{font-size:18px;margin:0}h3{font-size:15px;margin:0 0 6px}p{line-height:1.65;margin:6px 0}.subtle{color:var(--muted);font-size:13px}.head-row,.section-head,.actions{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}.card{background:white;border:1px solid var(--line);border-radius:14px;padding:22px;margin:18px 0;box-shadow:0 4px 18px #10182803}.overview{display:grid;grid-template-columns:1fr 1fr;gap:18px}.overview .card{margin:0}.meta{display:flex;gap:14px 24px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:13px}.mock{font-size:12px;color:#81500b;background:#fff6df;border:1px solid #f2dfac;padding:5px 10px;border-radius:6px}.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.chip{font-size:12px;background:#f3f5fa;padding:4px 8px;border-radius:5px;color:#475467}dl{display:grid;grid-template-columns:90px 1fr;gap:10px;margin:16px 0 0;font-size:14px}dt{color:var(--muted)}dd{margin:0}button,select{font:inherit;cursor:pointer;border:1px solid #d0d5dd;border-radius:8px;padding:9px 13px;background:#fff;color:var(--ink)}button:hover{border-color:var(--primary)}button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #a5b4fc;outline-offset:3px}.primary-btn{background:var(--primary);color:white;border-color:var(--primary)}button:disabled{cursor:not-allowed;opacity:.45}.brand-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}.brand-card{border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:9px}.brand-card.current{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary)}.brand-title{display:flex;justify-content:space-between;gap:8px}.type{font-size:12px;color:#4359b4;background:#eef2ff;padding:3px 7px;border-radius:5px}.brand-card button{margin-top:auto}.source{font-size:12px;color:#667085}.comparison{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.3fr);gap:24px;margin-top:18px;align-items:start}.radar-box{background:#f8faff;border:1px solid #edf0f7;border-radius:12px;padding:12px}#radar{display:block;width:100%;max-height:350px}.legend{display:flex;justify-content:center;gap:18px;font-size:13px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px;min-width:470px}th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f8f9fc;color:#475467;font-weight:600}td small{display:block;color:var(--muted);margin-top:5px}.opportunities{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:16px}.opportunities article{border-left:3px solid #c7d2fe;padding-left:14px}.footer-actions{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:22px}.footer-actions div{display:flex;flex-wrap:wrap;gap:10px}dialog{border:1px solid var(--line);border-radius:16px;padding:24px;max-width:520px;width:calc(100% - 32px);box-shadow:var(--shadow)}dialog::backdrop{background:#10182866}dialog pre{white-space:pre-wrap;font:inherit;font-size:13px;background:#f6f8ff;padding:14px;border-radius:8px}.status{min-height:22px;color:#176b45;font-size:13px;margin-top:12px}[hidden]{display:none!important}
+@media(max-width:1050px){.app{grid-template-columns:190px minmax(0,1fr)}.brand-list{grid-template-columns:1fr}.comparison{grid-template-columns:1fr}}
+@media(max-width:700px){.app{display:block}.sidebar{position:static;height:auto;padding:14px 18px;border-bottom:1px solid var(--line)}.sidebar .nav-label,.sidebar .side-bottom{display:none}.sidebar .brand{padding:0 0 10px}.overview,.opportunities{grid-template-columns:1fr}.card{padding:16px}.comparison{gap:14px}h1{font-size:24px}.meta{gap:10px}.head-row{align-items:flex-start}}
+.app{display:block}
+main{max-width:1400px}
+.network-toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:18px 0;font-size:13px}
+.network-toolbar label{display:flex;align-items:center;gap:6px}
+input[type=search]{font:inherit;padding:9px 10px;border:1px solid #d0d5dd;border-radius:8px;max-width:100%}
+.network-layout{display:grid;grid-template-columns:minmax(0,1fr) 240px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.network-canvas{position:relative;background:radial-gradient(ellipse at center,#fff,#f2f5fd);min-width:0}
+#brand-network{display:block;width:100%;height:560px;touch-action:none;cursor:grab}
+#brand-network:active{cursor:grabbing}
+.network-detail{padding:18px;background:#fafbff;border-left:1px solid var(--line);font-size:13px}
+.network-detail ul{padding-left:18px}.network-detail button{display:block;width:100%;margin-top:10px}
+.network-zoom{position:absolute;bottom:12px;left:12px;display:flex;align-items:center;gap:6px;background:white;padding:5px;border:1px solid var(--line);border-radius:8px;font-size:12px}
+#network-tooltip{position:absolute;z-index:3;pointer-events:none;max-width:250px;background:#172441;color:white;padding:10px;border-radius:8px;font-size:12px;box-shadow:0 8px 24px #10182820;white-space:pre-line}
+#network-empty{position:absolute;top:40%;left:10%;right:10%;text-align:center;background:#fff;padding:20px;border-radius:10px}
+.network-node{cursor:pointer;outline:none}.network-node:focus circle{stroke:#111827;stroke-width:3}
+#network-section:fullscreen{overflow:auto;background:var(--bg);padding:24px;margin:0}
+#network-section:fullscreen #brand-network{height:75vh}
+#network-section.expanded{position:fixed;inset:0;z-index:50;overflow:auto;background:var(--bg);margin:0;border-radius:0}
+@media(max-width:900px){.network-layout{grid-template-columns:1fr}.network-detail{border-left:0;border-top:1px solid var(--line)}#brand-network{height:490px}}
+@media(max-width:500px){#brand-network{height:390px}.network-toolbar label{flex-wrap:wrap}.network-toolbar select{max-width:100%}}
+/* Galaxy workspace */
+#network-section.galaxy{padding:0;overflow:hidden;border:1px solid #dfe5ed;box-shadow:0 10px 32px #23365306}
+.galaxy-heading{padding:25px 28px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.galaxy-heading h2{font-size:22px;letter-spacing:-.4px;margin-top:8px}
+.galaxy-eyebrow{font-size:10px;letter-spacing:1.8px;font-weight:700;color:#75839a;display:flex;align-items:center;gap:12px}
+.galaxy-eyebrow span{letter-spacing:.6px;background:#f0f3f8;border-radius:4px;padding:3px 5px;font-weight:500}
+.galaxy-stats{display:flex;align-items:center;gap:24px;flex-shrink:0}
+.galaxy-stats>span{display:grid;gap:2px;font-size:11px;color:#75839a}
+.galaxy-stats strong{font-size:24px;line-height:1.2;letter-spacing:-1px;color:#243550;font-weight:600}
+.galaxy-stats button{border-color:#e0e5ed;color:#53647d;font-size:12px;padding:8px 11px}
+.galaxy-controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:0 28px 18px}
+.galaxy-controls label{font-size:12px;color:#718096;display:flex;align-items:center;gap:7px}
+.galaxy-controls select{padding:7px 8px;font-size:12px;border-color:#e3e7ee;color:#40516b;background:#fff;max-width:140px}
+.galaxy-controls .galaxy-search{padding:0 10px;gap:5px;background:#f5f7fa;border:1px solid #e4e9f0;border-radius:7px;min-width:220px;margin-right:auto}
+.galaxy-search span{font-size:22px}
+.galaxy-search input{background:transparent;border:0!important;outline:none!important;box-shadow:none!important;padding:9px 5px;font-size:12px;width:190px}
+.galaxy-clear{border:0;font-size:12px;color:#687994;padding:7px}
+.galaxy .network-canvas{border-top:1px solid #e9edf3;border-bottom:1px solid #e9edf3;background:radial-gradient(ellipse at 45% 50%,#f3f6fc 0%,#fafbfd 65%,#fff);overflow:hidden}
+.galaxy #brand-network{height:680px;width:100%;touch-action:none;display:block;user-select:none}
+.galaxy-scope{position:absolute;top:18px;left:25px;pointer-events:none;font-size:11px;letter-spacing:.3px;color:#7b8ba1}
+.galaxy-scope span{padding:0 9px;color:#c5cdd9}
+.galaxy-map-footer{position:absolute;left:20px;right:20px;bottom:15px;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.galaxy-map-footer>span{font-size:10px;color:#8b98ab}
+.galaxy .network-zoom{position:static;pointer-events:auto;box-shadow:0 2px 10px #23365307;gap:3px;border-color:#e2e8f1;border-radius:8px;padding:4px}
+.network-zoom button{border:0;padding:4px 8px;font-size:16px;color:#5a6b83}
+#network-scale{font-size:11px;min-width:34px;text-align:center;color:#7c8ba0}
+.galaxy-bottom{padding:14px 25px;display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:11px;color:#7a889d}
+#network-legend{display:flex;gap:17px;flex-wrap:wrap;margin-right:auto}
+.legend-item{display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:3px 0}
+.legend-dot{width:7px;height:7px;border-radius:50%;background:var(--cluster-color)}
+.legend-item.active{color:#243550;font-weight:700}
+.galaxy-bottom label{display:flex;gap:5px;align-items:center}
+#network-count{font-size:10px}
+.galaxy #network-detail{border:0;border-top:1px solid #e9edf3;background:#fafbfd;padding:20px 26px;display:grid;grid-template-columns:minmax(180px,.8fr) minmax(220px,1.5fr) auto;gap:24px;align-items:center}
+.galaxy #network-detail h3{font-size:16px;color:#243550}
+.detail-eyebrow{font-size:10px;color:#8b99ac;letter-spacing:1px;margin-bottom:5px}
+.detail-description{font-size:12px;color:#6b7b92;line-height:1.8}
+.detail-actions{display:flex;gap:8px;flex-wrap:wrap}
+.galaxy #network-detail button{width:auto;display:inline-block;margin:0;font-size:12px}
+.detail-types{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.detail-types span{font-size:10px;background:#edf1f7;border-radius:4px;padding:2px 5px;color:#6e7e96}
+.galaxy-footnote{margin:0;padding:0 26px 16px;font-size:10px;background:#fafbfd}
+.graph-node{cursor:grab;outline:none;transition:opacity .16s}
+.graph-node:active{cursor:grabbing}
+.graph-node:focus-visible .node-body{stroke:#253959;stroke-width:3}
+.graph-node .node-caption{paint-order:stroke;stroke:#fafbfd;stroke-width:4px;stroke-linejoin:round}
+.graph-edge{transition:opacity .16s}
+.graph-edge-hit{cursor:pointer}
+.galaxy #network-tooltip{background:#fff;color:#344662;border:1px solid #dce3ee;box-shadow:0 8px 28px #23365318;padding:12px 14px;font-size:11px;line-height:1.8}
+.galaxy #network-empty{top:35%;left:25%;right:25%;z-index:2;box-shadow:0 8px 36px #23365310;color:#40516b;font-size:13px}
+#network-section:fullscreen.galaxy{padding:0;display:flex;flex-direction:column}
+#network-section:fullscreen .network-canvas{flex:1;min-height:450px}
+#network-section:fullscreen #brand-network{height:100%;min-height:450px}
+@media(prefers-reduced-motion:reduce){.graph-node,.graph-edge{transition:none!important}}
+@media(max-width:800px){.galaxy-heading{padding:20px}.galaxy-stats{gap:12px}.galaxy-stats strong{font-size:20px}.galaxy-controls{padding:0 20px 15px}.galaxy #network-detail{grid-template-columns:1fr;gap:12px}.galaxy #brand-network{height:620px}.galaxy-bottom{padding:12px 20px}.galaxy-map-footer>span{max-width:150px}.galaxy-scope{left:20px}}
+@media(max-width:480px){.galaxy-heading{align-items:flex-start}.galaxy-heading h2{font-size:18px}.galaxy-stats>span{display:none}.galaxy-controls .galaxy-search{width:100%}.galaxy-search input{width:100%}.galaxy #brand-network{height:560px}.galaxy-controls{gap:8px}.galaxy #network-empty{left:10%;right:10%}.galaxy-scope{font-size:10px}}#network-section.expanded.galaxy{padding:0}
+#network-section.expanded .network-canvas{height:max(420px,calc(100vh - 260px))}
+#network-section.expanded #brand-network{height:100%}
+#brands.brand-list{display:flex;flex-direction:column;gap:0;max-height:650px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:14px}
+#brands .brand-card{border:0;border-bottom:1px solid var(--line);border-radius:0;padding:18px;display:grid;grid-template-columns:minmax(190px,.7fr) minmax(0,1.6fr) auto;gap:20px;align-items:start;box-shadow:none}
+#brands .brand-card:last-child{border-bottom:0}
+#brands .brand-card.current{background:#f5f7ff;box-shadow:inset 3px 0 var(--primary)}
+.brand-row-title{display:flex;align-items:flex-start;gap:10px;cursor:pointer}
+.brand-row-title input{margin-top:4px;accent-color:var(--primary);width:16px;height:16px}
+.brand-row-title strong{display:block;margin-bottom:8px}
+.brand-row-title .type{display:inline-block}
+.brand-row-body p{font-size:13px;margin:0 0 5px}
+.brand-row-body details{font-size:12px;color:var(--muted);margin-top:9px}
+.brand-row-body details p{font-size:12px;margin-top:7px}
+#brands .brand-card button{margin:0;font-size:12px}
+.list-actions{display:inline-flex;gap:8px;margin-left:12px}.list-actions button{font-size:12px}
+#comparison-legend{flex-wrap:wrap;gap:6px;max-height:180px;overflow:auto;margin-top:12px}
+.series-key{font-size:11px;border:1px solid #dfe5ef;border-radius:6px;padding:5px 8px;background:white;white-space:nowrap}
+.series-key .dot{width:8px;height:8px}
+#comparison .table-wrap{max-height:590px;overflow:auto}
+#comparison table{min-width:100%;width:max-content}
+#comparison table th,#comparison table td{min-width:170px;max-width:230px}
+#comparison table th:first-child{position:sticky;left:0;z-index:1;background:#f8f9fc;min-width:105px;max-width:105px}
+#comparison thead th{position:sticky;top:0;z-index:2}
+#comparison thead th:first-child{z-index:3}
+@media(max-width:750px){#brands .brand-card{grid-template-columns:1fr;gap:10px}.list-actions{display:flex;margin:10px 0 0}#brands .brand-card button{justify-self:start}}
+</style></head><body>
+<div class="app">
+<main><header><div class="head-row"><div><h1>競品分析</h1><p class="subtle">掌握市場輪廓，選出值得深入比較的品牌。</p></div><span class="mock">Mock Data · 原始資料與圖表分數均為模擬</span></div>
+<div class="card meta"><span>分析品牌　<strong>SHCJ 生活采家</strong></span><span>搜尋時間　2026/11/24 14:30</span><span>探索品牌　<strong>50 家</strong></span><span>搜尋條件　居家用品・台灣・官網與公開通路</span></div></header>
+<div class="overview"><section class="card"><h2>自身品牌摘要</h2><dl><dt>品牌定位</dt><dd>為家庭提供可信賴的居家選物</dd><dt>主要商品</dt><dd>居家用品、生活用品</dd><dt>目標客群</dt><dd>家庭及重視居家生活品質的消費者</dd></dl><p class="source">品牌摘要沿用已知定位，其餘比較數值為模擬。</p></section>
+<section class="card"><h2>產業與市場概況</h2><dl><dt>產業特性</dt><dd>商品用途、選物定位與通路形式多元。</dd><dt>趨勢摘要</dt><dd>本示例觀察設計選物與多通路服務兩種方向。</dd><dt>市場分布</dt><dd>樣本以台灣為主，部分模擬品牌另有日本服務地區。</dd></dl><p class="source">依 50 家 Mock 品牌描述，不代表整體市場調查。</p></section></div>
+<section class="card galaxy" id="network-section">
+<div class="galaxy-heading"><div><div class="galaxy-eyebrow">MARKET LANDSCAPE <span>MOCK DATA</span></div><h2>市場品牌關聯星鏈圖</h2><p class="subtle">從共同特性探索品牌，找到值得深入比較的對象。</p></div><div class="galaxy-stats"><span><strong>50</strong>相關品牌</span><span><strong>5</strong>品牌群聚</span><button id="network-fullscreen" title="展開全螢幕">⛶ 全螢幕</button></div></div>
+<div class="galaxy-controls">
+<label class="galaxy-search"><span aria-hidden="true">⌕</span><input id="network-search" type="search" placeholder="搜尋並定位品牌…" aria-label="搜尋並定位品牌"></label>
+<label>群聚 <select id="network-cluster"><option value="">全部群聚</option><option>居家收納</option><option>廚房用品</option><option>生活選物</option><option>家具家飾</option><option>綜合零售</option></select></label>
+<label>類型 <select id="network-type"><option value="">全部類型</option><option>直接競爭</option><option>間接競爭</option><option>相似定位</option><option>標竿品牌</option><option>潛在競爭</option></select></label>
+<label>相關性 <select id="network-relevance"><option value="0">全部程度</option><option value="80">高相關 · 80+</option><option value="65">中高相關 · 65+</option></select></label><label>連線 <select id="network-strength"><option value="0">全部強度</option><option value="70">70 以上</option><option value="85">85 以上</option></select></label>
+<button id="network-clear" class="galaxy-clear">清除篩選</button>
+</div>
+<div class="network-canvas">
+<div class="galaxy-scope">台灣 <span>／</span> 居家生活 <span>／</span> 公開通路</div>
+<svg id="brand-network" viewBox="0 0 1180 720" preserveAspectRatio="xMidYMid meet" role="group" aria-label="市場品牌關聯網絡，方向鍵平移，加減鍵縮放，Enter 選取品牌"></svg>
+<div id="network-tooltip" role="tooltip" hidden></div>
+<div id="network-empty" hidden><strong>沒有符合條件的品牌</strong><p>調整群聚或競爭類型，重新查看品牌。</p><button id="network-empty-clear">顯示全部品牌</button></div>
+<div class="galaxy-map-footer"><span>拖曳節點調整位置 · 拖曳背景平移</span><div class="network-zoom"><button id="network-minus" aria-label="縮小星鏈圖">−</button><span id="network-scale">100%</span><button id="network-plus" aria-label="放大星鏈圖">＋</button><button id="network-reset" aria-label="重置視角">↺</button></div></div>
+</div>
+<div class="galaxy-bottom"><div id="network-legend"></div><label><input id="network-own-edges" type="checkbox"> 自家關聯</label><span id="network-count" role="status"></span></div>
+<aside id="network-detail" class="network-detail" aria-live="polite"></aside>
+<p class="source galaxy-footnote">模擬探索樣本 · 距離表示相關性層次，並非精確刻度；群聚色代表主要共同特性。點選連線可查看關聯依據。</p>
+</section><section class="card"><div class="section-head"><h2>競爭品牌清單</h2><span id="selected-count" class="subtle" aria-live="polite">已選 0 家作為後續分析對象</span></div><p class="subtle">勾選多家品牌，下方雷達圖與原始資料表會同步比較。簡介與符合條件標籤保留於列表中。</p><label>清單搜尋 <input id="list-search" type="search" placeholder="搜尋全部 50 家品牌"></label><div class="list-actions"><button id="select-visible">勾選搜尋結果</button><button id="clear-selected">清除已選</button></div><div class="brand-list" id="brands" role="group" aria-label="可複選的競爭品牌"></div><p id="list-count" class="subtle"></p></section>
+<section class="card" id="comparison"><div class="section-head"><h2>品牌特性比較</h2><span id="comparison-count" class="subtle" role="status"></span></div><div class="comparison"><div class="radar-box"><svg id="radar" viewBox="0 0 440 360" role="img" aria-labelledby="radar-title radar-description"></svg><div class="legend" id="comparison-legend" aria-label="雷達圖品牌圖例"></div><p class="subtle">模擬分數 0–100 表示特性程度。缺值軸留空，連線在缺值處中斷。服務特性採文字比較。</p></div><div class="table-wrap"><table><thead><tr id="comparison-head"></tr></thead><tbody id="comparison-body"></tbody></table></div></div>
+<details style="margin-top:16px"><summary>查看本次示意分數的共同口徑</summary><p class="subtle">價格帶以模擬上緣換算；商品範圍以模擬類別數換算；銷售通路以通路數換算；服務地區以國家／地區數換算；公開口碑以模擬星等換算。六項服務描述中，服務特性僅列於表格。所有品牌採同一口徑，分數與量尺僅供原型討論。</p></details></section>
+<section class="card"><h2>初步市場機會提示</h2><div class="opportunities"><article><h3>聚焦實用選物定位</h3><p class="subtle">可進一步比較用途說明、商品組合與居家情境如何呈現。</p></article><article><h3>研究通路的服務差異</h3><p class="subtle">樣本涵蓋線上與門市，可深入核對取貨、配送與售後條件。</p></article><article><h3>補足口碑資料</h3><p class="subtle">自家公開口碑未取得，後續可補資料再比較顧客提及的主題。</p></article></div></section>
+<div class="footer-actions"><div><button id="save">保存結果</button><button id="explore">重新探索</button></div><div><button id="level2" disabled>品牌競爭比較（第二層）</button><button id="level3" class="primary-btn" disabled>競爭情報深度分析（第三層）</button></div></div><p class="subtle">選擇至少一家品牌後，可模擬帶入後續分析。</p><div id="status" class="status" role="status"></div></main></div>
+<dialog id="handoff"><h2 id="dialog-title"></h2><p id="dialog-description"></p><pre id="payload"></pre><form method="dialog"><button class="primary-btn">關閉</button></form></dialog>
+<script src="js/market-brand-data.js"></script><script>
+const {conditions,self,brands,clusters,relationTypes,colors}=window.PailotismMarketData;
+const networkEdges=[];
+const edgeKeys=new Set();
+for(let index=0;index<brands.length;index++){
+const groupStart=Math.floor(index/10)*10;
+for(const offset of [1,2]){
+const target=groupStart+(index-groupStart+offset)%10;
+const pair=[index,target].sort((a,b)=>a-b),key=pair.join('-');
+if(edgeKeys.has(key))continue;
+edgeKeys.add(key);
+const left=brands[pair[0]],right=brands[pair[1]];
+const shared=[left.cluster,'台灣市場'];if(pair[0]%3===pair[1]%3)shared.push('相近通路');
+networkEdges.push({source:left.id,target:right.id,strength:58+((pair[0]*13+pair[1]*7)%40),shared,reason:'兩家公開模擬資料均包含'+shared.join('、')+'。'});
+}
+}
+for(let group=0;group<4;group++)networkEdges.push({source:brands[group*10+4].id,target:brands[(group+1)*10+4].id,strength:68,shared:['官網通路','家庭客群'],reason:'跨群聚的共同通路與客群（模擬）。'});
+const strongestExternal=new Map(brands.map(brand=>[brand.id,new Set(networkEdges.filter(edge=>edge.source===brand.id||edge.target===brand.id).sort((a,b)=>b.strength-a.strength).slice(0,3))]));
+for(let index=networkEdges.length-1;index>=0;index--){
+const edge=networkEdges[index];
+if(!strongestExternal.get(edge.source).has(edge)||!strongestExternal.get(edge.target).has(edge))networkEdges.splice(index,1);
+}brands.filter(brand=>brand.relevance!==null).forEach(brand=>networkEdges.push({source:'own',target:brand.id,strength:brand.relevance,shared:brand.matched,reason:'自家與此品牌符合本次搜尋的'+brand.matched.join('、')+'條件（模擬）。'}));const labels=['商品價格帶','商品範圍','銷售通路','服務地區','公開口碑','服務特性'];
+const selected=new Set();let active='a';
+const byId=id=>document.getElementById(id);
+function node(tag,text){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;return el;}
+const seriesPalette=['#d27343','#178c8b','#9566bb','#b08b25','#487da8','#b75d89','#70944c','#bd6c65','#5d68a8','#537f72'];
+function seriesColor(brand){return brand===self?'#4359f3':seriesPalette[brands.indexOf(brand)%seriesPalette.length];}
+function selectedBrands(){return brands.filter(brand=>selected.has(brand.id));}
+function selectionChanged(){
+document.querySelectorAll('.brand-card').forEach(card=>{
+card.querySelector('input').checked=selected.has(card.dataset.id);
+card.classList.toggle('current',selected.has(card.dataset.id));
+});
+if(typeof refreshNetworkDetail==='function')refreshNetworkDetail();
+byId('selected-count').textContent='已選 '+selected.size+' 家，同步用於圖表與後續分析';
+byId('level2').disabled=byId('level3').disabled=selected.size===0;
+draw();
+}
+function setComparison(id){active=id;selected.add(id);selectionChanged();}
+brands.forEach(brand=>{
+const card=node('article');card.className='brand-card';card.dataset.id=brand.id;
+const label=node('label');label.className='brand-row-title';
+const box=node('input');box.type='checkbox';box.setAttribute('aria-label','選取 '+brand.name);
+box.addEventListener('change',()=>{box.checked?selected.add(brand.id):selected.delete(brand.id);selectionChanged();});
+const title=node('div');title.append(node('strong',brand.name));const type=node('span',brand.types.join(' · '));type.className='type';title.append(type);label.append(box,title);
+const body=node('div');body.className='brand-row-body';body.append(node('p',brand.intro),node('p','推薦原因：'+brand.why));
+const chips=node('div');chips.className='chips';brand.matched.forEach(value=>{const chip=node('span',value);chip.className='chip';chips.append(chip);});body.append(chips);
+const details=node('details');const summary=node('summary','資料來源與服務資訊');details.append(summary,node('p','服務地區：'+brand.raw[3]+'。官網：模擬品牌，未提供網址。來源：Mock 品牌資料 '+brand.id.toUpperCase()));body.append(details);
+const button=node('button','加入比較 ↓');button.addEventListener('click',()=>{setComparison(brand.id);byId('comparison').scrollIntoView({behavior:'smooth',block:'start'});});
+card.append(label,body,button);byId('brands').append(card);
+});
+byId('select-visible').addEventListener('click',()=>{document.querySelectorAll('.brand-card').forEach(card=>{if(!card.hidden)selected.add(card.dataset.id);});selectionChanged();});
+byId('clear-selected').addEventListener('click',()=>{selected.clear();selectionChanged();});
+function emphasizeSeries(id){
+byId('radar').querySelectorAll('[data-series]').forEach(element=>{element.style.opacity=id&&element.dataset.series!==id?'.12':'1';});
+}
+function draw(){
+const chosen=selectedBrands(),items=[self,...chosen];
+byId('comparison-count').textContent='自家品牌 ＋ '+chosen.length+' 家競品'+(chosen.length>6?' · 可指向圖例聚焦單一品牌':'');
+const legend=byId('comparison-legend');legend.replaceChildren();
+items.forEach(item=>{
+const label=node('button');label.type='button';label.className='series-key';
+const dot=node('i');dot.className='dot';dot.style.background=seriesColor(item);
+label.append(dot,item.name);const id=item===self?'own':item.id;
+label.addEventListener('pointerenter',()=>emphasizeSeries(id));label.addEventListener('pointerleave',()=>emphasizeSeries(null));
+label.addEventListener('focus',()=>emphasizeSeries(id));label.addEventListener('blur',()=>emphasizeSeries(null));
+if(item!==self){label.title='點擊移除此品牌的比較';label.setAttribute('aria-label','移除比較 '+item.name);label.append(node('span',' ×'));label.addEventListener('click',()=>{selected.delete(item.id);selectionChanged();});}
+legend.append(label);
+});
+const head=byId('comparison-head');head.replaceChildren();
+head.append(node('th','比較項目'));items.forEach(item=>{const th=node('th',item.name);th.scope='col';th.style.borderTop='3px solid '+seriesColor(item);head.append(th);});
+byId('comparison-body').replaceChildren();
+labels.forEach((label,index)=>{
+const row=node('tr'),title=node('th',label);title.scope='row';row.append(title);
+items.forEach(item=>{const cell=node('td',item.raw[index]??'未取得');cell.append(node('small',item.raw[index]===null?'來源：未取得':'模擬來源：'+(item===self?'自家資料':item.name)));row.append(cell);});
+byId('comparison-body').append(row);
+});
+const svg=byId('radar');svg.replaceChildren();const ns='http://www.w3.org/2000/svg';
+function shape(tag,attrs,text,parent=svg){const element=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([key,value])=>element.setAttribute(key,value));if(text)element.textContent=text;parent.append(element);return element;}
+shape('title',{id:'radar-title'},self.name+' 與 '+chosen.length+' 家競品特性比較（模擬）');
+shape('desc',{id:'radar-description'},'相同五項量化維度。缺資料的軸不繪點，線條在缺值處中斷。服務特性僅於表格列示。');
+const point=(axis,value)=>{const angle=(axis*72-90)*Math.PI/180;return [220+Math.cos(angle)*112*value/100,170+Math.sin(angle)*112*value/100];};
+for(let ring=1;ring<=5;ring++){shape('polygon',{points:self.scores.map((_,axis)=>point(axis,ring*20).join(',')).join(' '),fill:'none',stroke:'#dfe5f1'});shape('text',{x:225,y:170-ring*22.4,fill:'#98a2b3','font-size':10},String(ring*20));}
+self.scores.forEach((_,axis)=>{const [x,y]=point(axis,100),[lx,ly]=point(axis,132);shape('line',{x1:220,y1:170,x2:x,y2:y,stroke:'#dfe5f1'});shape('text',{x:lx,y:ly,'text-anchor':'middle','dominant-baseline':'middle',fill:'#475467','font-size':13},labels[axis]);});
+items.forEach(item=>{
+const index=brands.indexOf(item),color=seriesColor(item);
+const group=shape('g',{'data-series':item===self?'own':item.id});
+const lineAttrs={fill:'none',stroke:color,'stroke-width':item===self?3:2,'stroke-dasharray':index>=10?(index%2?'6 3':'2 3'):''};
+if(item.scores.every(value=>value!==null))shape('polygon',{...lineAttrs,points:item.scores.map((value,axis)=>point(axis,value).join(',')).join(' '),fill:chosen.length<=4?color:'none','fill-opacity':.045},null,group);
+else item.scores.forEach((value,axis)=>{const next=(axis+1)%item.scores.length;if(value===null||item.scores[next]===null)return;const [x1,y1]=point(axis,value),[x2,y2]=point(next,item.scores[next]);shape('line',{...lineAttrs,x1,y1,x2,y2},null,group);});
+item.scores.forEach((value,axis)=>{if(value===null)return;const [cx,cy]=point(axis,value);const dot=shape('circle',{cx,cy,r:item===self?4:3,fill:color},null,group);shape('title',{},item.name+' · '+labels[axis]+'：'+value+'（模擬）',dot);});
+});
+if(!chosen.length)shape('text',{x:220,y:336,'text-anchor':'middle',fill:'#667085','font-size':12},'請在品牌列表勾選要一起比較的品牌');
+}function show(title,description,payload){byId('dialog-title').textContent=title;byId('dialog-description').textContent=description;byId('payload').textContent=payload;byId('handoff').showModal();}
+function handoff(level){show(level,'模擬帶入搜尋條件與已勾選品牌。','品牌：'+brands.filter(item=>selected.has(item.id)).map(item=>item.name).join('、')+'\n產業：'+conditions.industry+'\n地區：'+conditions.region+'\n通路：'+conditions.channels.join('、'));}
+byId('level2').addEventListener('click',()=>{
+if(selected.size>10){show('請調整比較品牌','第二階段最多比較 10 家競品，目前已選 '+selected.size+' 家。請在清單中調整後再開始。','第一階段的選擇已保留，不會自動截斷。');return;}
+try{
+const payload={analysisId:'mock-'+Date.now(),ownBrand:self,selectedBrandIds:[...selected],searchConditions:conditions,brands,sources:['第一階段 Mock 品牌資料'],createdAt:new Date().toISOString()};
+localStorage.setItem('pailotism-level2-input',JSON.stringify(payload));
+localStorage.setItem('pailotism-level1-result',JSON.stringify({active,selected:[...selected],conditions,savedAt:new Date().toISOString()}));
+location.href='brand-competitive-comparison.html';
+}catch{byId('status').textContent='無法保存階段銜接資料，請允許瀏覽器本地儲存後重試。';}
+});
+byId('level3').addEventListener('click',()=>handoff('競爭情報深度分析（第三層）'));
+byId('explore').addEventListener('click',()=>show('重新探索','示意入口，已帶回本次搜尋條件。','品牌：'+self.name+'\n產業：'+conditions.industry+'\n地區：'+conditions.region));
+byId('save').addEventListener('click',()=>{try{localStorage.setItem('pailotism-level1-result',JSON.stringify({active,selected:[...selected],conditions,savedAt:new Date().toISOString()}));byId('status').textContent='結果與已選品牌已儲存於此瀏覽器。';}catch{byId('status').textContent='瀏覽器無法使用本地儲存，請允許本地儲存後重試。';}});
+try{const saved=JSON.parse(localStorage.getItem('pailotism-level1-result'));if(saved){if(brands.some(b=>b.id===saved.active))active=saved.active;for(const id of saved.selected??[])if(brands.some(b=>b.id===id))selected.add(id);document.querySelectorAll('.brand-card').forEach(card=>card.querySelector('input').checked=selected.has(card.dataset.id));byId('status').textContent='已載入此瀏覽器先前保存的選擇。';}}catch{}
+const networkSvg=byId('brand-network'),detailPanel=byId('network-detail');
+const svgNS='http://www.w3.org/2000/svg';
+const clusterPalette={'居家收納':'#648ab1','廚房用品':'#6c9c90','生活選物':'#9a88b3','家具家飾':'#bf9a71','綜合零售':'#8495a9'};
+const center={x:590,y:360};
+let networkSelected=null,hoveredId=null,selectedEdge=null,networkScale=1,networkPan={x:0,y:0},pointerState=null,skipClick=false,viewFrame=0;
+const positions=new Map();
+const initialPositions=new Map();
+const ownNode={id:'own',name:self.name,cluster:'自家品牌',types:['自家品牌'],matched:['居家用品','台灣','官網'],relevance:100};
+const allNetworkNodes=[ownNode,...brands];
+const brandMap=new Map(allNetworkNodes.map(brand=>[brand.id,brand]));
+const anchors=[{x:352,y:188},{x:849,y:207},{x:773,y:533},{x:335,y:532},{x:969,y:411}];
+const externalEdges=networkEdges.filter(edge=>edge.source!=='own');
+externalEdges.forEach(edge=>{
+const a=brandMap.get(edge.source),b=brandMap.get(edge.target);
+edge.shared=a.cluster===b.cluster?[a.cluster,'台灣市場']:['家庭客群','官網通路'];
+edge.reason='兩家模擬資料具有'+edge.shared.join('、')+'等共同特性。';
+});
+// Preserve explicit cross-cluster links as bridges while keeping each node at most three neighbours.
+for(const [left,right] of [[5,14],[18,27],[28,36],[38,45],[8,22],[2,33]]){
+const a=brands[left],b=brands[right];
+if(externalEdges.some(edge=>(edge.source===a.id&&edge.target===b.id)||(edge.source===b.id&&edge.target===a.id)))continue;
+for(const id of [a.id,b.id]){
+const incident=externalEdges.filter(edge=>edge.source===id||edge.target===id).sort((a,b)=>a.strength-b.strength);
+if(incident.length>=3)externalEdges.splice(externalEdges.indexOf(incident[0]),1);
+}
+externalEdges.push({source:a.id,target:b.id,strength:72+(left%12),shared:['家庭客群','官網通路'],reason:'兩個商品群聚都服務家庭消費者，並有官網銷售通路（模擬）。'});
+}
+networkEdges.splice(0,networkEdges.length,...externalEdges,...brands.filter(brand=>brand.relevance!==null).sort((a,b)=>b.relevance-a.relevance).slice(0,7).map(brand=>({source:'own',target:brand.id,strength:brand.relevance,shared:brand.matched,reason:'與自家在'+brand.matched.join('、')+'有共同特性（模擬）。'})));
+
+function seeded(index){const v=Math.sin(index*127.1+311.7)*43758.5453;return v-Math.floor(v);}
+function settleLayout(){
+positions.set('own',{...center,vx:0,vy:0});
+brands.forEach((brand,index)=>{
+const anchor=anchors[clusters.indexOf(brand.cluster)];
+const angle=seeded(index+1)*Math.PI*2,radius=45+seeded(index+71)*110;
+positions.set(brand.id,{x:anchor.x+Math.cos(angle)*radius,y:anchor.y+Math.sin(angle)*radius,vx:0,vy:0});
+});
+const nodes=brands.map(brand=>({brand,p:positions.get(brand.id)}));
+for(let tick=0;tick<520;tick++){
+const alpha=Math.max(.06,1-tick/540);
+for(const {brand,p} of nodes){
+const anchor=anchors[clusters.indexOf(brand.cluster)];
+p.vx+=(anchor.x-p.x)*.009*alpha;p.vy+=(anchor.y-p.y)*.009*alpha;
+const dx=p.x-center.x,dy=p.y-center.y,d=Math.hypot(dx,dy)||1;
+const target=brand.relevance===null?340:140+(98-brand.relevance)*4.5;
+const radial=(target-d)*.018*alpha;
+p.vx+=dx/d*radial;p.vy+=dy/d*radial;
+if(d<100){p.vx+=dx/d*(100-d)*.16;p.vy+=dy/d*(100-d)*.16;}
+}
+for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+const a=nodes[i].p,b=nodes[j].p;
+let dx=b.x-a.x,dy=b.y-a.y;if(Math.abs(dx)+Math.abs(dy)<.01){dx=.2;dy=.2;}
+const d2=dx*dx+dy*dy,d=Math.sqrt(d2);
+const repulse=Math.min(2,500/(d2+100))*alpha;
+a.vx-=dx/d*repulse;a.vy-=dy/d*repulse;b.vx+=dx/d*repulse;b.vy+=dy/d*repulse;
+// Elliptical collision also reserves horizontal space for short Chinese names.
+const collision=Math.sqrt(dx*dx/(76*76)+dy*dy/(48*48));
+if(collision<1){const push=(1-collision)*3.7;a.vx-=dx/d*push;a.vy-=dy/d*push;b.vx+=dx/d*push;b.vy+=dy/d*push;}
+}
+for(const edge of externalEdges){
+const a=positions.get(edge.source),b=positions.get(edge.target),same=brandMap.get(edge.source).cluster===brandMap.get(edge.target).cluster;
+const dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1,rest=same?78:210;
+const force=(d-rest)*(same?.006:.001)*alpha;
+a.vx+=dx/d*force;a.vy+=dy/d*force;b.vx-=dx/d*force;b.vy-=dy/d*force;
+}
+for(const {p} of nodes){p.vx*=.65;p.vy*=.65;p.x=Math.max(95,Math.min(1085,p.x+p.vx));p.y=Math.max(95,Math.min(620,p.y+p.vy));}
+}
+// Finish with positional collision projection so the settled graph stays still.
+for(let pass=0;pass<90;pass++){
+for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+const a=nodes[i].p,b=nodes[j].p,dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1;
+if(d<44){const move=(44-d)*.51;a.x-=dx/d*move;a.y-=dy/d*move;b.x+=dx/d*move;b.y+=dy/d*move;}
+}
+for(const {p} of nodes){const dx=p.x-center.x,dy=p.y-center.y,d=Math.hypot(dx,dy)||1;if(d<94){p.x=center.x+dx/d*94;p.y=center.y+dy/d*94;}p.x=Math.max(75,Math.min(1105,p.x));p.y=Math.max(90,Math.min(625,p.y));}
+}
+positions.forEach((p,id)=>{if(id!=='own'){p.x=center.x+(p.x-center.x)*1.2;p.y=center.y+(p.y-center.y)*1.03;}initialPositions.set(id,{...p});});
+}
+settleLayout();
+function svgNode(tag,attrs,text,parent=networkSvg){const element=document.createElementNS(svgNS,tag);Object.entries(attrs).forEach(([key,value])=>element.setAttribute(key,value));if(text)element.textContent=text;parent.append(element);return element;}
+function visibleBrands(){const type=byId('network-type').value,cluster=byId('network-cluster').value,minimum=Number(byId('network-relevance').value);return brands.filter(brand=>(!type||brand.types.includes(type))&&(!cluster||brand.cluster===cluster)&&(!minimum||(brand.relevance!==null&&brand.relevance>=minimum)));}
+function currentEdges(){const ids=new Set(['own',...visibleBrands().map(brand=>brand.id)]),minimum=Number(byId('network-strength').value);return networkEdges.filter(edge=>ids.has(edge.source)&&ids.has(edge.target)&&edge.strength>=minimum&&(byId('network-own-edges').checked||edge.source!=='own'));}
+function transformNetwork(){const viewport=byId('network-viewport');if(viewport)viewport.setAttribute('transform','translate('+networkPan.x+' '+networkPan.y+') translate(590 360) scale('+networkScale+') translate(-590 -360)');byId('network-scale').textContent=Math.round(networkScale*100)+'%';}
+function addDetailColumn(title,body){const column=node('div');column.append(node('div',title),node('p',body));column.firstChild.className='detail-eyebrow';column.lastChild.className='detail-description';detailPanel.append(column);return column;}
+function refreshNetworkDetail(){
+detailPanel.replaceChildren();
+if(selectedEdge){
+addDetailColumn('品牌關聯',brandMap.get(selectedEdge.source).name+' ↔ '+brandMap.get(selectedEdge.target).name);
+addDetailColumn('共同特性 · '+selectedEdge.strength+'（模擬）',selectedEdge.shared.join(' · ')+'。'+selectedEdge.reason);
+const actions=node('div');actions.className='detail-actions';const button=node('button','查看品牌');button.addEventListener('click',()=>selectNetwork(selectedEdge.target));actions.append(button);detailPanel.append(actions);return;
+}
+const brand=brandMap.get(networkSelected);
+if(!brand){addDetailColumn('探索起點','SHCJ 生活采家');addDetailColumn('讀懂這張圖','色彩區分主要商品群聚。懸停查看直接關聯，點選品牌保留焦點。');addDetailColumn('下一步','選一個品牌，連動下方雷達與原始資料比較。');return;}
+const title=node('div');title.append(node('div','所選品牌'),node('h3',brand.name));title.firstChild.className='detail-eyebrow';
+const tags=node('div');tags.className='detail-types';brand.types.forEach(type=>tags.append(node('span',type)));title.append(tags);detailPanel.append(title);
+addDetailColumn('相關程度 '+(brand.relevance===null?'未取得':brand.relevance+' · 模擬')+' ／ '+brand.cluster,brand.why+' 符合：'+brand.matched.join('、')+'。來源：'+brand.sources.join('、'));
+const actions=node('div');actions.className='detail-actions';const compare=node('button','查看比較 ↓');compare.className='primary-btn';compare.addEventListener('click',()=>{setComparison(brand.id);byId('comparison').scrollIntoView({behavior:'smooth',block:'start'});});
+const toggle=node('button',selected.has(brand.id)?'✓ 已加入分析':'＋ 加入分析');toggle.addEventListener('click',()=>{selected.has(brand.id)?selected.delete(brand.id):selected.add(brand.id);selectionChanged();});actions.append(compare,toggle);detailPanel.append(actions);
+}
+function selectNetwork(id){networkSelected=id==='own'?null:id;selectedEdge=null;if(id!=='own')setComparison(id);refreshNetworkDetail();renderNetwork();}
+function labelPositions(nodes){
+const occupied=[{x:505,y:343,w:170,h:71}],result=new Map();
+const order=[...nodes].filter(n=>n.id!=='own').sort((a,b)=>(a.id===networkSelected?-1:b.id===networkSelected?1:b.relevance-a.relevance));
+const max=networkScale>=1.8?50:networkScale>=1.3?28:19;
+for(const brand of order){
+const hot=brand.id===networkSelected||brand.id===hoveredId;
+if(result.size>=max&&!hot)continue;
+const p=positions.get(brand.id),w=brand.name.length*11+8,h=18;
+const choices=[{x:p.x-w/2,y:p.y+15},{x:p.x+15,y:p.y-9},{x:p.x-w-15,y:p.y-9},{x:p.x-w/2,y:p.y-31}];
+for(const box of choices){
+box.w=w;box.h=h;
+const intersects=occupied.some(b=>box.x<b.x+b.w+5&&box.x+w+5>b.x&&box.y<b.y+b.h+3&&box.y+h+3>b.y);
+const hitsNode=nodes.some(other=>{if(other.id===brand.id)return false;const q=positions.get(other.id);return q.x+10>box.x&&q.x-10<box.x+w&&q.y+10>box.y&&q.y-10<box.y+h;});
+if(!intersects&&!hitsNode){result.set(brand.id,box);occupied.push(box);break;}
+}
+}
+return result;
+}
+function updateEmphasis(){
+const focus=hoveredId||networkSelected;
+const neighbours=new Set(focus?[focus,'own']:[]);currentEdges().forEach(edge=>{if(edge.source===focus)neighbours.add(edge.target);if(edge.target===focus)neighbours.add(edge.source);});
+networkSvg.querySelectorAll('.graph-node').forEach(group=>{const id=group.dataset.brandId;group.style.opacity=focus&&!neighbours.has(id)?'.18':'1';});
+networkSvg.querySelectorAll('.graph-edge').forEach(path=>{const hot=focus&&(path.dataset.source===focus||path.dataset.target===focus);path.style.opacity=focus?(hot?'.85':'.055'):path.dataset.cross==='true'?'.3':'.48';path.style.strokeWidth=hot?'2':path.dataset.width;});
+}
+function renderNetwork(){
+const visible=visibleBrands(),nodes=[ownNode,...visible],edges=currentEdges();networkSvg.replaceChildren();
+const defs=svgNode('defs',{});const pattern=svgNode('pattern',{id:'galaxy-dots',width:25,height:25,patternUnits:'userSpaceOnUse'},null,defs);svgNode('circle',{cx:1,cy:1,r:.65,fill:'#9babc3',opacity:.2},null,pattern);
+svgNode('rect',{width:1180,height:720,fill:'url(#galaxy-dots)','pointer-events':'none'});
+const viewport=svgNode('g',{id:'network-viewport'});
+clusters.forEach(cluster=>{
+const members=visible.filter(b=>b.cluster===cluster);if(!members.length)return;
+const ps=members.map(b=>positions.get(b.id)),cx=ps.reduce((sum,p)=>sum+p.x,0)/ps.length,cy=ps.reduce((sum,p)=>sum+p.y,0)/ps.length;
+const color=clusterPalette[cluster],radius=Math.max(70,...ps.map(p=>Math.hypot(p.x-cx,p.y-cy)))+40;
+const gradient=svgNode('radialGradient',{id:'wash-'+clusters.indexOf(cluster)},null,defs);svgNode('stop',{offset:'0%', 'stop-color':color,'stop-opacity':'.105'},null,gradient);svgNode('stop',{offset:'100%','stop-color':color,'stop-opacity':'0'},null,gradient);
+svgNode('ellipse',{cx,cy,rx:radius*1.25,ry:radius*.9,fill:'url(#wash-'+clusters.indexOf(cluster)+')','pointer-events':'none'},null,viewport);
+const minY=Math.min(...ps.map(p=>p.y)),labelY=Math.max(72,minY-38);
+svgNode('text',{x:cx,y:labelY,'text-anchor':'middle',fill:color,'font-size':12,'font-weight':600,'letter-spacing':1,'pointer-events':'none'},cluster,viewport);
+});
+edges.forEach((edge,index)=>{
+const a=positions.get(edge.source),b=positions.get(edge.target),cross=brandMap.get(edge.source).cluster!==brandMap.get(edge.target).cluster;
+const dx=b.x-a.x,dy=b.y-a.y,bend=(index%2?1:-1)*.065;
+const d='M '+a.x+' '+a.y+' Q '+((a.x+b.x)/2-dy*bend)+' '+((a.y+b.y)/2+dx*bend)+' '+b.x+' '+b.y;
+const width=.65+(edge.strength-50)/70;
+const line=svgNode('path',{d,fill:'none',stroke:cross?'#9ca8be':clusterPalette[brandMap.get(edge.source).cluster]||'#727fc1','stroke-width':width,'stroke-dasharray':cross?'3 5':'',class:'graph-edge','data-source':edge.source,'data-target':edge.target,'data-cross':cross,'data-width':width,'pointer-events':'none'},null,viewport);
+const hit=svgNode('path',{'data-edge-source':edge.source,'data-edge-target':edge.target,d,fill:'none',stroke:'transparent','stroke-width':12,class:'graph-edge-hit',role:'button',tabindex:0,'aria-label':brandMap.get(edge.source).name+'與'+brandMap.get(edge.target).name+'的關聯'},null,viewport);
+const choose=()=>{if(skipClick)return;selectedEdge=edge;networkSelected=null;hoveredId=null;refreshNetworkDetail();updateEmphasis();line.style.opacity='1';line.style.strokeWidth='2.5';};
+hit.addEventListener('click',choose);hit.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();choose();}});
+svgNode('title',{},edge.reason,hit);
+});
+const labels=labelPositions(nodes);
+nodes.forEach(brand=>{
+const p=positions.get(brand.id),own=brand.id==='own',hot=networkSelected===brand.id,color=own?'#4f5dc8':clusterPalette[brand.cluster];
+const group=svgNode('g',{class:'graph-node','data-brand-id':brand.id,role:'button',tabindex:0,'aria-label':brand.name+'，'+brand.types.join('、')},null,viewport);
+svgNode('circle',{cx:p.x,cy:p.y,r:own?30:18,fill:'transparent'},null,group);if(own||hot)svgNode('circle',{cx:p.x,cy:p.y,r:own?35:19,fill:color,opacity:own?.07:.12,'pointer-events':'none'},null,group);
+if(own)svgNode('circle',{cx:p.x,cy:p.y,r:27,fill:'none',stroke:color,'stroke-width':.8,opacity:.25,'pointer-events':'none'},null,group);
+svgNode('circle',{cx:p.x,cy:p.y,r:own?19:7.5,fill:color,stroke:'#fff','stroke-width':own?3:2,class:'node-body'},null,group);
+svgNode('circle',{cx:p.x-2,cy:p.y-2,r:own?7:2.3,fill:'#fff',opacity:.25,'pointer-events':'none'},null,group);
+if(own){svgNode('text',{x:p.x,y:p.y+48,'text-anchor':'middle',fill:'#303d69','font-size':15,'font-weight':700,class:'node-caption'},brand.name,group);svgNode('text',{x:p.x,y:p.y+65,'text-anchor':'middle',fill:'#8d97b1','font-size':10,class:'node-caption'},'自家品牌 · 分析基準',group);}
+else if(labels.has(brand.id)){const box=labels.get(brand.id);svgNode('text',{x:box.x+box.w/2,y:box.y+12,'text-anchor':'middle',fill:hot?'#293a58':'#607089','font-size':11,'font-weight':hot?700:500,class:'node-caption'},brand.name,group);}
+group.addEventListener('click',()=>{if(!skipClick)selectNetwork(brand.id);});
+group.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();selectNetwork(brand.id);}});
+group.addEventListener('pointerenter',event=>{if(pointerState)return;hoveredId=brand.id;updateEmphasis();const tip=byId('network-tooltip'),rect=networkSvg.parentElement.getBoundingClientRect();tip.textContent=brand.name+' · '+(own?'自家品牌':brand.cluster)+'\n'+brand.types.join('、')+'\n相關性 '+(own?'分析基準':brand.relevance===null?'未取得':brand.relevance+'（模擬）')+'\n'+brand.matched.join(' · ');tip.hidden=false;tip.style.left=Math.max(8,Math.min(event.clientX-rect.left+18,rect.width-255))+'px';tip.style.top=Math.max(42,Math.min(event.clientY-rect.top+15,rect.height-130))+'px';});
+group.addEventListener('pointerleave',()=>{hoveredId=null;byId('network-tooltip').hidden=true;updateEmphasis();});
+});
+byId('network-empty').hidden=visible.length>0;byId('network-count').textContent=visible.length+' / '+brands.length+' 品牌 · '+edges.length+' 關聯';
+transformNetwork();updateEmphasis();
+document.querySelectorAll('.legend-item').forEach(item=>item.classList.toggle('active',byId('network-cluster').value===item.dataset.cluster));
+}
+function animateView(targetScale,targetPan){
+cancelAnimationFrame(viewFrame);const fromScale=networkScale,from={...networkPan},start=performance.now(),reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function frame(now){const t=reduced?1:Math.min(1,(now-start)/350),ease=1-Math.pow(1-t,3);networkScale=fromScale+(targetScale-fromScale)*ease;networkPan={x:from.x+(targetPan.x-from.x)*ease,y:from.y+(targetPan.y-from.y)*ease};transformNetwork();if(t<1)viewFrame=requestAnimationFrame(frame);else renderNetwork();}
+viewFrame=requestAnimationFrame(frame);
+}
+function zoomNetwork(multiplier){animateView(Math.max(.55,Math.min(3,networkScale*multiplier)),networkPan);}
+function clientToWorld(event){const rect=networkSvg.getBoundingClientRect(),scale=networkSvg.getAttribute("preserveAspectRatio").includes("slice")?Math.max(rect.width/1180,rect.height/720):Math.min(rect.width/1180,rect.height/720),left=rect.left+(rect.width-1180*scale)/2,top=rect.top+(rect.height-720*scale)/2;return {x:((event.clientX-left)/scale-networkPan.x-center.x)/networkScale+center.x,y:((event.clientY-top)/scale-networkPan.y-center.y)/networkScale+center.y};}
+networkSvg.setAttribute('tabindex','0');
+new ResizeObserver(entries=>{
+const rect=entries[0].contentRect;
+networkSvg.setAttribute('preserveAspectRatio',rect.width/rect.height<1.05?'xMidYMid slice':'xMidYMid meet');
+}).observe(networkSvg);
+networkSvg.addEventListener('wheel',event=>{event.preventDefault();zoomNetwork(event.deltaY<0?1.15:1/1.15);},{passive:false});
+networkSvg.addEventListener('pointerdown',event=>{
+if(event.button!==0)return;cancelAnimationFrame(viewFrame);skipClick=false;
+const target=event.target.closest('.graph-node'),id=target?.dataset.brandId,world=clientToWorld(event);
+pointerState={id:id==='own'?'locked':id,start:world,clientX:event.clientX,clientY:event.clientY,position:id?{...positions.get(id)}:null,pan:{...networkPan},edge:event.target.closest('.graph-edge-hit')?.dataset,moved:false};
+networkSvg.setPointerCapture(event.pointerId);byId('network-tooltip').hidden=true;
+});
+networkSvg.addEventListener('pointermove',event=>{
+if(!pointerState)return;const dx=event.clientX-pointerState.clientX,dy=event.clientY-pointerState.clientY;
+if(Math.abs(dx)+Math.abs(dy)>4)pointerState.moved=true;if(!pointerState.moved)return;
+skipClick=true;const world=clientToWorld(event);
+if(pointerState.id&&pointerState.id!=='locked'){const p=positions.get(pointerState.id);p.x=Math.max(35,Math.min(1145,pointerState.position.x+world.x-pointerState.start.x));p.y=Math.max(60,Math.min(650,pointerState.position.y+world.y-pointerState.start.y));renderNetwork();}
+else if(!pointerState.id){const rect=networkSvg.getBoundingClientRect(),scale=networkSvg.getAttribute("preserveAspectRatio").includes("slice")?Math.max(rect.width/1180,rect.height/720):Math.min(rect.width/1180,rect.height/720);networkPan={x:pointerState.pan.x+dx/scale,y:pointerState.pan.y+dy/scale};transformNetwork();}
+});
+networkSvg.addEventListener('pointerup',event=>{const state=pointerState;pointerState=null;if(networkSvg.hasPointerCapture(event.pointerId))networkSvg.releasePointerCapture(event.pointerId);if(state&&!state.moved&&state.id)selectNetwork(state.id==='locked'?'own':state.id);if(state&&!state.moved&&state.edge){selectedEdge=networkEdges.find(edge=>edge.source===state.edge.edgeSource&&edge.target===state.edge.edgeTarget);networkSelected=null;hoveredId=null;refreshNetworkDetail();updateEmphasis();}setTimeout(()=>skipClick=false,0);});
+networkSvg.addEventListener('pointercancel',()=>{pointerState=null;skipClick=false;});
+networkSvg.addEventListener('keydown',event=>{if(event.target!==networkSvg)return;const arrows={ArrowLeft:[30,0],ArrowRight:[-30,0],ArrowUp:[0,30],ArrowDown:[0,-30]};if(arrows[event.key]){event.preventDefault();networkPan.x+=arrows[event.key][0];networkPan.y+=arrows[event.key][1];transformNetwork();}if(event.key==='+'||event.key==='='){event.preventDefault();zoomNetwork(1.2);}if(event.key==='-'){event.preventDefault();zoomNetwork(1/1.2);}});
+byId('network-plus').addEventListener('click',()=>zoomNetwork(1.2));byId('network-minus').addEventListener('click',()=>zoomNetwork(1/1.2));
+byId('network-reset').addEventListener('click',()=>{networkSelected=null;selectedEdge=null;hoveredId=null;positions.forEach((p,id)=>Object.assign(p,initialPositions.get(id)));refreshNetworkDetail();renderNetwork();animateView(1,{x:0,y:0});});
+let searchTimer;
+byId('network-search').addEventListener('input',()=>{
+clearTimeout(searchTimer);
+searchTimer=setTimeout(()=>{const query=byId('network-search').value.trim();if(!query){renderNetwork();return;}const match=brands.find(brand=>brand.name.includes(query));if(!match){byId('network-count').textContent='找不到「'+query+'」';return;}byId('network-type').value='';byId('network-cluster').value='';byId('network-relevance').value='0';selectNetwork(match.id);const p=positions.get(match.id),scale=1.65;animateView(scale,{x:(center.x-p.x)*scale,y:(center.y-p.y)*scale});},220);
+});
+['network-type','network-cluster','network-relevance','network-strength','network-own-edges'].forEach(id=>byId(id).addEventListener('change',()=>{hoveredId=null;renderNetwork();}));
+function clearNetworkFilters(){byId('network-search').value='';byId('network-type').value='';byId('network-cluster').value='';byId('network-strength').value='0';byId('network-relevance').value='0';networkSelected=null;selectedEdge=null;refreshNetworkDetail();renderNetwork();animateView(1,{x:0,y:0});}
+byId('network-clear').addEventListener('click',clearNetworkFilters);byId('network-empty-clear').addEventListener('click',clearNetworkFilters);
+byId('network-fullscreen').addEventListener('click',async()=>{const section=byId('network-section');try{if(document.fullscreenElement)await document.exitFullscreen();else if(section.requestFullscreen)await section.requestFullscreen();else section.classList.toggle('expanded');}catch{section.classList.toggle('expanded');}byId('network-fullscreen').textContent=document.fullscreenElement||section.classList.contains('expanded')?'⛶ 離開全螢幕':'⛶ 全螢幕';});
+document.addEventListener('fullscreenchange',()=>byId('network-fullscreen').textContent=document.fullscreenElement?'⛶ 離開全螢幕':'⛶ 全螢幕');
+document.addEventListener('keydown',event=>{if(event.key==='Escape'){byId('network-section').classList.remove('expanded');byId('network-fullscreen').textContent=document.fullscreenElement?'⛶ 離開全螢幕':'⛶ 全螢幕';}});
+Object.entries(clusterPalette).forEach(([cluster,color])=>{const item=node('button');item.type='button';item.className='legend-item';item.dataset.cluster=cluster;item.style.setProperty('--cluster-color',color);item.style.border='none';item.style.background='transparent';const dot=node('i');dot.className='legend-dot';item.append(dot,cluster);item.addEventListener('click',()=>{byId('network-cluster').value=byId('network-cluster').value===cluster?'':cluster;renderNetwork();});byId('network-legend').append(item);});byId('list-search').addEventListener('input',event=>{let count=0;document.querySelectorAll('.brand-card').forEach(card=>{const brand=brands.find(item=>item.id===card.dataset.id);card.hidden=!brand.name.includes(event.target.value.trim());if(!card.hidden)count++;});byId('list-count').textContent='顯示 '+count+'／'+brands.length+' 家'+(count?'':'，沒有符合名稱的品牌。');});
+byId('list-count').textContent='顯示 '+brands.length+'／'+brands.length+' 家';
+refreshNetworkDetail();renderNetwork();selectionChanged();
+</script></body></html>
