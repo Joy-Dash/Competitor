@@ -165,7 +165,7 @@ function renderOverview(){
     tr.append(name,e('td',facet),e('td',difference));body.append(tr);});table.append(body);wrap.append(table);content.append(wrap);
   content.append(e('p','值得關注：'+(data.focus?data.focus.model.name+'；原因是 '+data.focus.high.map(d=>d.label+'重疊').join('、')+'。原有分類只是第一階段標記，本頁判斷依有效比較更新。':'目前不足以推薦主要競爭對象。'),'analysis-summary'),e('p','初步差異化：'+data.direction));
   const details=e('details',null,'overview-meta'),c=coverage();details.append(e('summary','分析條件與資料涵蓋率 · '+c.filled+'／'+c.total+'（'+c.percent+'%）'));
-  details.append(e('p','自家＋'+chosen.size+'家競品 · '+{product:'商品型',service:'服務型',mixed:'混合型'}[state.kind]+' · '+topics.filter(([id])=>selectedTopics.has(id)).map(([,name])=>name).join('、')),e('p','搜尋條件：'+Object.values(conditions).map(v=>Array.isArray(v)?v.join('、'):v).join(' · ')),e('p','涵蓋率包含 Mock 客觀欄位與使用者補充；推論與資料完整度不同，詳見來源區。'));
+  details.append(e('p','自家＋'+chosen.size+'家競品 · '+{product:'商品型',service:'服務型',mixed:'混合型'}[state.kind]+' · '+topics.filter(([id])=>selectedTopics.has(id)).map(([,name])=>name).join('、')),e('p','搜尋條件：'+Object.values(conditions).map(v=>Array.isArray(v)?v.join('、'):v&&typeof v==='object'?JSON.stringify(v):v).join(' · ')),e('p','涵蓋率包含 Mock 客觀欄位與使用者補充；推論與資料完整度不同，詳見來源區。'));
   content.append(details);$('overview-content').replaceChildren(content);
 }
 const axes=analysis.axes;
