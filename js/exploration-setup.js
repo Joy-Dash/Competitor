@@ -1,10 +1,10 @@
 (()=>{
 const get=id=>document.getElementById(id);
-const fields=['brand','kind','industry','audience','position','region','channel','focus','origin','extra'];
+const fields=['brand','kind','industry','audience','position','region','channel','focus','origin'];
 const key='pailotism-exploration-draft';
 const checks=['region-on','channel-on'];
 function draft(){const value={};fields.forEach(id=>value[id]=get('setup-'+id).value.trim());checks.forEach(id=>value[id]=get('setup-'+id).checked);value.directions=[...document.querySelectorAll('[name=direction]:checked')].map(el=>el.value);return value;}
-function restore(value){fields.forEach(id=>{if(typeof value[id]==='string')get('setup-'+id).value=value[id];});checks.forEach(id=>{if(typeof value[id]==='boolean')get('setup-'+id).checked=value[id];});if(value.directions)document.querySelectorAll('[name=direction]').forEach(el=>el.checked=value.directions.includes(el.value));toggle();}
+function restore(value){fields.forEach(id=>{if(typeof value[id]==='string')get('setup-'+id).value=value[id];});if(typeof value.extra==='string'&&value.extra.trim()){get('setup-focus').value=[value.focus,value.extra].filter(Boolean).join('\n');}checks.forEach(id=>{if(typeof value[id]==='boolean')get('setup-'+id).checked=value[id];});if(value.directions)document.querySelectorAll('[name=direction]').forEach(el=>el.checked=value.directions.includes(el.value));toggle();}
 function toggle(){get('setup-region').disabled=!get('setup-region-on').checked;get('setup-channel').disabled=!get('setup-channel-on').checked;}
 ['industry','audience','position'].forEach(id=>get('setup-'+id).addEventListener('input',toggle));
 checks.forEach(id=>get('setup-'+id).addEventListener('change',toggle));

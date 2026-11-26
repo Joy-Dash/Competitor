@@ -117,12 +117,12 @@ input[type=search]{font:inherit;padding:9px 10px;border:1px solid #d0d5dd;border
 
 <form id="exploration-form">
 
-<label for="setup-focus" class="focus-label">這次想特別了解什麼？<span class="subtle">（選填）</span></label>
-<textarea id="setup-focus" rows="3" maxlength="2000" placeholder="例如：想找相似定位的品牌，看看他們的通路和客群有什麼不同。"></textarea>
+<label for="setup-focus" class="focus-label">這次想了解什麼，或有哪些搜尋偏好？<span class="subtle">（選填）</span></label>
+<textarea id="setup-focus" rows="3" maxlength="2000" placeholder="例如：想了解相似品牌的通路與客群，以台灣中小型自有品牌為主，排除大型連鎖品牌。"></textarea>
 <details class="compact-settings"><summary>調整探索條件 <span class="subtle">地區、品牌類型及其他偏好</span></summary>
 <div class="setup-grid"><div><label><input type="checkbox" id="setup-region-on" checked> 限定服務／銷售地區</label><input id="setup-region" aria-label="服務或銷售地區" value="台灣" placeholder="縣市、行政區或台灣"></div><div><label><input type="checkbox" id="setup-channel-on"> 限定通路</label><select id="setup-channel" disabled><option>官網</option><option>電商</option><option>實體門市</option></select></div></div>
 <p>探索方向（預設全部）</p><div class="setup-directions"><label><input name="direction" type="checkbox" value="直接競爭" checked> 直接競品</label><label><input name="direction" type="checkbox" value="相似定位" checked> 相似定位</label><label><input name="direction" type="checkbox" value="間接競爭" checked> 替代選擇</label><label><input name="direction" type="checkbox" value="標竿品牌" checked> 標竿品牌</label><label><input name="direction" type="checkbox" value="潛在競爭" checked> 潛在競品</label></div>
-<div class="setup-grid"><label>品牌來源地<input id="setup-origin" placeholder="不限制"></label><label>其他條件<input id="setup-extra" placeholder="例如：中小型品牌"></label></div>
+<div class="setup-grid"><label>品牌來源地<input id="setup-origin" placeholder="不限制"></label></div>
 <details><summary>修正本次品牌資訊</summary><p class="subtle">僅用於本次探索，不寫回 Brand Book。</p><div class="setup-grid"><label>品牌名稱<input id="setup-brand" readonly value="SHCJ 生活采家"></label><label>品牌類型<select id="setup-kind"><option>商品型</option></select></label><label>主要商品／服務<input id="setup-industry" value="居家用品、生活用品"></label><label>目標客群<input id="setup-audience" value="家庭及重視居家生活品質的消費者"></label></div><label>品牌定位<textarea id="setup-position" rows="2">為家庭提供可信賴的居家選物</textarea></label></details>
 <small>啟用的地區與通路限制搜尋範圍；定位與客群用於相似度參考。</small>
 </details>
